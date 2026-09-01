@@ -10,7 +10,7 @@ Catégorie : Cracking
 nmap 10.10.0.3
 ```
 
-![Scan nmap](./screenshots/yer_a_wizard_nmap.png)
+![Scan nmap](./screenshots/yer_a_wizard/nmap.png)
 
 J'ai quand même essayé une requête HTTP au cas où, ça donne "Connection refused", confirmé aussi par des scans ffuf/gobuster sur le port 80 qui échouent pareil. Donc pas de site web ici, je me concentre sur FTP et SSH.
 
@@ -23,7 +23,7 @@ Password:
 ls -la
 ```
 
-![FTP](./screenshots/yer_a_wizard_ftp.png)
+![FTP](./screenshots/yer_a_wizard/ftp.png)
 
 Normalement, un dossier contient toujours . et .. en plus des vrais fichiers/dossiers, ce que je ne savais pas au début et j'ai pris du temps à savoir. Ici il y a une troisième ligne : .... Ce n'est pas une entrée spéciale du système, juste un dossier normal nommé avec trois points pour se fondre avec . et ..
 
@@ -34,7 +34,7 @@ get .hidden
 cat .hidden
 ```
 
-![Faux mot de passe](./screenshots/yer_a_wizard_password.png)
+![Faux mot de passe](./screenshots/yer_a_wizard/password.png)
 
 Ce message insiste beaucoup trop sur le fait d'être vrai ("je jure", "je ne mens jamais"). Ça sent le piège, un peu comme le message codé qui menait nulle part sur le challenge H4ck3rz. J'ai essayé la connexion en ssh avec ce mot de passe mais ça n'a pas fonctionné.
 
@@ -46,7 +46,7 @@ ls -la
 cat .reallyHidden
 ```
 
-![Vrai mot de passe](./screenshots/yer_a_wizard_password2.png)
+![Vrai mot de passe](./screenshots/yer_a_wizard/password2.png)
 
 ## 4. Se connecter en SSH
 
@@ -64,7 +64,7 @@ ls -la
 cat user.txt
 ```
 
-![Flag](./screenshots/yer_a_wizard_flag.png)
+![Flag](./screenshots/yer_a_wizard/flag.png)
 
 Le contenu de user.txt ressemble à du base64 (que des lettres, chiffres, + / =). Je l'ai décodé sur Cyber Swiss Army Knife, et le résultat était encore du base64. Il a fallu décoder 3 fois de suite avant d'avoir le flag :
 

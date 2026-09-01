@@ -15,7 +15,7 @@ Deux ports ouverts : 22 (ssh) et 80 (http)
 
 Un premier gobuster révèle un dossier /t/ :
 
-![Gobuster](./screenshots/toss_a_coin_gobuster.png)
+![Gobuster](./screenshots/toss_a_coin/gobuster.png)
 
 Ensuite gobuster sur /t/ révèle un sous-dossier o :
 
@@ -47,7 +47,7 @@ curl http://10.10.0.6/t/o/s/s/_/a/_/c/o/i/n/_/t/o/_/y/o/u/r/_/w/i/t/c/h/e/r/_/o/
     <p style="display: none;">jaskier:YouHaveTheMostIncredibleNeckItsLikeASexyGoose</p>
 ```
 
-![ID et mdp](./screenshots/toss_a_coin_id.png)
+![ID et mdp](./screenshots/toss_a_coin/id.png)
 
 Un `<p>` en display: none planquait des identifiants en clair dans le code source : jaskier:YouHaveTheMostIncredibleNeckItsLikeASexyGoose.
 
@@ -70,7 +70,7 @@ cat user.txt
 
 **Flag : EPI{R3Sp3C7_D03snT_M4k3_h1S70rY}**
 
-![Flag obtenu](./screenshots/toss_a_coin_flag.png)
+![Flag obtenu](./screenshots/toss_a_coin/flag.png)
 
 ## Failles trouvées
 

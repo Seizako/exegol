@@ -11,7 +11,7 @@ nmap 10.10.0.11
 
 Deux ports ouverts : 22 (ssh) et 80 (http)
 
-![Scan nmap](./screenshots/h4ck3rz_nmap.png)
+![Scan nmap](./screenshots/h4ck3rz/nmap.png)
 
 ## 2. Énumération web
 
@@ -23,7 +23,7 @@ gobuster dir -u http://10.10.0.11/ -w /usr/share/wordlists/seclists/Discovery/We
 
 On peut voir que robots.txt révèle un chemin caché, /1337_53CR37_l41r. Le deuxième gobuster découvre login.php et portal.php.
 
-![Gobuster avec extensions](./screenshots/h4ck3rz_gobuster.png)
+![Gobuster avec extensions](./screenshots/h4ck3rz/gobuster.png)
 
 ## 3. Découverte des identifiants
 
@@ -49,7 +49,7 @@ Le code source de index.html contient un commentaire HTML avec un username :
 
 Sur portal.php, contenait une chaîne encodée en double base64. Décodée, elle donne "have you heard of a rabbit hole? You should look it up, you just fell in one!" qui était donc un piège.
 
-![Page cachée et commentaire HTML](./screenshots/h4ck3rz_creds.png)
+![Page cachée et commentaire HTML](./screenshots/h4ck3rz/creds.png)
 
 ## 4. Authentification
 
@@ -65,7 +65,7 @@ curl -X POST http://10.10.0.11/login.php -d "username=d4rk_T1t0u4N&password=8ES7
 ```
 Réponse 302 Found vers /portal.php : authentification réussie.
 
-![Login réussi](./screenshots/h4ck3rz_login.png)
+![Login réussi](./screenshots/h4ck3rz/login.png)
 
 ## 5. Exécution de commande
 
@@ -109,7 +109,7 @@ curl -b cookie.txt http://10.10.0.11/portal.php "command=sudo -u titouan sed -n 
 
 **Flag : EPI{71me_70_D0_7H05E_NcuR5e2}**
 
-![Flag obtenu](./screenshots/h4ck3rz_flag.png)
+![Flag obtenu](./screenshots/h4ck3rz/flag.png)
 
 ## Failles trouvées
 
