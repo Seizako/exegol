@@ -90,17 +90,17 @@ cat find.txt
 
 ![Flag obtenu](./screenshots/batman_secret_flag.png)
 
-## Vulnérabilités identifiées
+## Failles trouvées
 
-Le site prend ce qu'on écrit et l'utilise tel quel dans une commande. Si on écrit une apostrophe, on peut ajouter notre propre commande à la place. Donc une injection de commande.
+- **Injection de commande via os.system** : le texte envoyé par le visiteur était inséré tel quel dans une commande shell, sans validation. En fermant la citation avec une apostrophe, on pouvait ajouter n'importe quelle commande à la place du serveur.
+- **Mot de passe en clair accessible en FTP anonyme** : le mot de passe d'authentification du service (G0th4mN33dsTh3B4t!) était écrit en clair dans le code source alert.py, récupérable simplement en se connectant en FTP sans compte.
+- **Dossier logs ouvert en lecture et écriture pour tous** : le dossier logs avait les droits drwxrwxrwx. Combiné à l'injection de commande, ça a permis d'écrire le résultat de nos commandes dans un fichier et de le relire ensuite via FTP.
 
-Le mot de passe était écrit en clair dans le code. On a pu le voir juste en se connectant en FTP, sans même avoir de compte (connexion "anonyme").
+## Comment corriger ça
 
-Le dossier logs était ouvert à tout le monde, en lecture et en écriture. Ça nous a servi à récupérer le résultat de nos commandes.
+Il ne faut jamais insérer le texte d'un visiteur directement dans une commande shell, fermer l'accès FTP anonyme, ne jamais écrire de mot de passe en clair dans le code, et restreindre les droits d'un dossier au strict nécessaire.
 
-Pour corriger ça, il ne faut jamais mettre le texte d'un visiteur directement dans une commande, fermer l'accès FTP anonyme, et ne jamais écrire de mot de passe en clair dans le code.
-
-## Points clés
+## Ce que j'ai appris
 
 Un port qui ne répond pas comme un site web n'est pas cassé, c'est juste autre chose. Se connecter avec nc montre ce que le service répond vraiment.
 

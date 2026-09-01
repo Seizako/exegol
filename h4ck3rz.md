@@ -110,19 +110,18 @@ curl -b cookie.txt http://10.10.0.11/portal.php "command=sudo -u titouan sed -n 
 
 ![Flag obtenu](./screenshots/h4ck3rz_flag.png)
 
-## Vulnérabilités identifiées
+## Failles trouvées
 
-Le site donnait sans le vouloir des informations qu'il ne devrait pas donner. Le nom d'utilisateur était caché dans un commentaire du code source, et le mot de passe était sur une page qu'il suffisait de visiter directement. Ces informations ne devraient jamais être accessibles aussi facilement.
+- **Informations sensibles exposées dans le code et sur une page accessible** : le nom d'utilisateur était caché dans un commentaire HTML, et le mot de passe se trouvait sur une page qu'il suffisait de visiter directement (trouvée via robots.txt). Ces deux infos permettent à elles seules de se connecter en tant qu'utilisateur légitime.
+- **Exécution de commandes système via un formulaire web** : la page portal.php exécutait directement les commandes tapées dans le champ "command", comme un vrai terminal accessible depuis un navigateur. N'importe quel visiteur authentifié pouvait donc lancer ce qu'il voulait sur le serveur.
+- **Règle sudo NOPASSWD mal configurée** : l'utilisateur www-data pouvait exécuter n'importe quelle commande en tant que titouan sans mot de passe ((titouan) NOPASSWD: ALL). Ça permet de changer de compte utilisateur en un instant, sans aucune barrière.
+- **Filtre de mots-clés contournable** : le mot "cat" était bloqué pour empêcher la lecture de fichiers, mais une autre commande (sed -n p) fait exactement la même chose. La protection ne bloquait que quelque mot, pas l'action elle-même.
 
-Le problème le plus grave se trouvait sur la page du shell. Elle exécutait directement les commandes tapées par un visiteur, comme un vrai terminal. Un site ne devrait jamais laisser quelqu'un exécuter des commandes système de cette façon.
+## Comment corriger ça
 
-En plus de ça, une mauvaise configuration permettait de changer de compte utilisateur sans avoir besoin d'un mot de passe. Cela donnait accès à un compte avec plus de droits très facilement.
+Il faudrait ne jamais mettre d'informations sensibles (identifiants, mots de passe) dans du code ou des pages visibles par tout le monde, ne jamais laisser un site exécuter des commandes tapées par un visiteur, et donner le minimum de droits possible à chaque compte (pas de sudo NOPASSWD sans raison). Un filtrage par mot-clé ne suffit jamais à bloquer une action, il faut empêcher l'exécution de commandes arbitraires à la source.
 
-Enfin, le site essayait de bloquer certains mots pour empêcher certaines commandes. Mais il suffisait d'utiliser un mot différent pour obtenir le même résultat, donc cette protection ne servait pas à grand chose.
-
-Pour corriger tout ça, il faudrait ne jamais mettre d'informations sensibles dans du code visible par tout le monde, ne jamais laisser un site exécuter des commandes tapées par un visiteur, et donner le minimum de droits possible à chaque compte.
-
-## Points clés
+## Ce que j'ai appris
 
 robots.txt n'est pas une vraie protection, juste une liste de chemins que les robots ne doivent pas visiter, rien n'empêche d'y aller quand même.
 

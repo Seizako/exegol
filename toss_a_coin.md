@@ -71,16 +71,17 @@ cat user.txt
 
 ![Flag obtenu](./screenshots/toss_a_coin_flag.png)
 
-## Vulnérabilités identifiées
+## Failles trouvées
 
-Un mot de passe en clair était planqué dans le HTML via un <p style="display:none">. Le fait qu'il ne s'affiche pas visuellement dans un navigateur ne le protège absolument pas, n'importe qui inspectant le code source ou faisant un simple curl récupère le texte tel quel. Le risque est donc direct, des identifiants valides pour un compte SSH réel se retrouvent exposés à quiconque visitant la page.
+- **Mot de passe en clair caché dans le HTML** : la page cachait des identifiants SSH valides dans une balise <p style="display: none;">. Le fait que ce soit invisible dans un navigateur ne protège rien, n'importe qui inspectant le code source (ou faisant juste un curl) récupère le texte tel quel. Ça donne un accès direct à un vrai compte SSH.
+- **Sécurité par l'obscurité avec les dossiers imbriqués** : le chemin vers la page cachée est protégé uniquement par sa longueur et le fait qu'il ne soit listé nulle part, pas par une vraie authentification. Ça ralentit un attaquant pressé, mais un outil comme ffuf le retrouve sans effort particulier.
 
-La structure de dossiers imbriqués sur plusieurs dizaines de niveaux repose sur le même principe, masquer un chemin en le rendant long et non-listé plutôt que de le protéger par une authentification. Ça ralentit un attaquant pressé, mais avec feroxbuster ou d'autre outil, on le retrouve sans effort particulier.
+## Comment corriger ça
 
-Pour corriger ça, ne jamais stocker le moindre secret dans du code servi au client, même caché visuellement ou dans un commentaire. Si un chemin doit rester confidentiel, il faut une vraie authentification derrière, pas juste un nom imprévisible.
+Ne jamais stocker le moindre secret (mot de passe, clé, etc.) dans du code envoyé au client, même caché visuellement ou dans un commentaire. Si un chemin doit rester confidentiel, il faut une vraie authentification derrière, pas juste un nom de dossier imprévisible.
 
-## Points clés
+## Ce que j'ai appris
 
-Un scan récursif automatique (feroxbuster) va beaucoup plus vite qu'enchaîner les gobuster à la main niveau par niveau, mais sans limite de débit ou de scans concurrents, il finit par surcharger le serveur cible et perdre silencieusement des résultats. Un nombre d'erreurs élevé dans la sortie d'un scan est un signal à ne pas ignorer, même si le scan se termine normalement.
+Passer de gobuster à ffuf avec l'option -recursion permet d'automatiser la découverte sur plusieurs niveaux de dossiers, plutôt que de relancer un scan manuellement à chaque nouveau dossier trouvé. Ça fait gagner beaucoup de temps quand la structure est profonde comme ici, mais ça envoie aussi beaucoup plus de requêtes d'un coup.
 
 Une page qui répond avec un contenu différent (ici un texte caché en display:none) mérite toujours d'être inspectée en curl brut plutôt que seulement dans un navigateur, pour voir tout ce qui est réellement envoyé par le serveur.
