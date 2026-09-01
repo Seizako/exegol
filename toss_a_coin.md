@@ -1,6 +1,7 @@
 # Toss a Coin
 
 Difficulté : Easy
+
 Catégorie : Fuzz
 
 ## 1. Reconnaissance
@@ -48,7 +49,7 @@ curl http://10.10.0.6/t/o/s/s/_/a/_/c/o/i/n/_/t/o/_/y/o/u/r/_/w/i/t/c/h/e/r/_/o/
 
 ![ID et mdp](./screenshots/toss_a_coin_id.png)
 
-Un <p> en display: none planquait des identifiants en clair dans le code source : jaskier:YouHaveTheMostIncredibleNeckItsLikeASexyGoose.
+Un `<p>` en display: none planquait des identifiants en clair dans le code source : jaskier:YouHaveTheMostIncredibleNeckItsLikeASexyGoose.
 
 ## 4. Authentification et récupération du flag
 

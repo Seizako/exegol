@@ -1,6 +1,7 @@
 # Batman's Secret
 
 Difficulté : Easy
+
 Catégorie : Injection
 
 ## 1. Reconnaissance

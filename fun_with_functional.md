@@ -1,6 +1,7 @@
 # Fun With Functional
 
 Difficulté : Easy
+
 Catégorie : Injection
 
 ## 1. Reconnaissance

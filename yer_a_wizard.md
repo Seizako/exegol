@@ -1,6 +1,7 @@
 # Yer a Wizard
 
 Difficulté : Easy
+
 Catégorie : Cracking
 
 ## 1. Scan de la machine
@@ -68,13 +69,14 @@ cat user.txt
 Le contenu de user.txt ressemble à du base64 (que des lettres, chiffres, + / =). Je l'ai décodé sur Cyber Swiss Army Knife, et le résultat était encore du base64. Il a fallu décoder 3 fois de suite avant d'avoir le flag :
 
 "VWxaQ1NtVjZRblZOTVRseVdWVTFabUpxVGpKTk1VcG1ZVWRHVjAweE9IcGlha0pXVDFWb1prNVVRa1JUZWtvNVEyYzlQUT09"
+
 Résultat = UlZCSmV6QnVNMTlyWVU1ZmJqTjJNMUpmYUdGV00xOHpiakJWT1VoZk5UQkRTeko5Q2c9PQ==
 
 "UlZCSmV6QnVNMTlyWVU1ZmJqTjJNMUpmYUdGV00xOHpiakJWT1VoZk5UQkRTeko5Q2c9PQ=="
+
 Résultat = RVBJezBuM19rYU5fbjN2M1JfaGFWM18zbjBVOUhfNTBDSzJ9Cg==
 
 "RVBJezBuM19rYU5fbjN2M1JfaGFWM18zbjBVOUhfNTBDSzJ9Cg=="
-Résultat = EPI{0n3_kaN_n3v3R_haV3_3n0U9H_50CK2}
 
 **Flag : EPI{0n3_kaN_n3v3R_haV3_3n0U9H_50CK2}**
 
