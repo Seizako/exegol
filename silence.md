@@ -2,7 +2,7 @@
 
 Difficulté : Medium
 
-Catégorie : Crypto
+Catégorie : Fuzz
 
 ## 1. Reconnaissance
 
@@ -18,7 +18,7 @@ curl http://10.10.0.2
 
 ![Page d'accueil](./screenshots/silence/curl.png)
 
-On y voit trois fichiers : main.css, adamondra.svg et ondra.jpg. 
+On y voit trois fichiers : main.css, adamondra.svg et ondra.jpg.
 
 ## 2. Analyse des fichiers de la page
 
@@ -60,6 +60,7 @@ unzip stats.zip
 ![Unzip](./screenshots/silence/unzip.png)
 
 L'archive contient deux fichiers :
+
 - ClimbersStats.xlsx.gpg : un fichier Excel chiffré avec GPG
 - .hidden-key : un fichier caché
 
